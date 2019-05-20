@@ -1,6 +1,9 @@
 import random
 import string 
 import time
+import numpy as np
+import matplotlib.style as style
+import matplotlib.pyplot as plt
 
 ########################################################
 ############## Ejecución de la simulación ##############
@@ -33,9 +36,6 @@ for repeticion in range(cantidad_ejecuciones):
 ######## Graficación del promedio de caracteres #########
 #########################################################
 
-import numpy as np
-import matplotlib.style as style
-import matplotlib.pyplot as plt
 
 # Escalar las unidades de la cantidad de caracteres
 caracteres_sin_unidades = [repeticiones[x][0] for x in range(len(repeticiones))]
