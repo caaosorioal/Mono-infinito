@@ -49,11 +49,15 @@ valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palab
 
 etiquetas = ["{0:.1%}".format(numero) for numero in valores_porcentuales]
 
+valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palabras[:len(valores_apariciones)]))
+
+etiquetas = ["{0:.1%}".format(numero) for numero in valores_porcentuales]
+
 plt.style.use(['seaborn'])
 plt.figure(figsize = (14,7))
 
-plt.bar(conteo_apariciones.keys(), [conteo_palabras[llave] for llave in conteo_apariciones.keys()])
-plt.bar(conteo_apariciones.keys(), conteo_apariciones.values(), color = 'red')
+plt.bar(conteo_apariciones.keys(), [conteo_palabras[llave] for llave in conteo_apariciones.keys()], label = 'Cantidad de palabras totales')
+plt.bar(conteo_apariciones.keys(), conteo_apariciones.values(), color = 'red', label = 'Cantidad de palabras que aparecen en cadena')
 
 for x, y in enumerate(valores_palabras[:len(valores_apariciones)]):
     plt.text(x + 1.9 , y + 150, "{0:.1%}".format(valores_porcentuales[x]), color='black', fontsize = 11)
@@ -61,5 +65,6 @@ for x, y in enumerate(valores_palabras[:len(valores_apariciones)]):
 plt.title("Porcentaje de apariciones en la cadena por longitud", fontsize = 17)
 plt.xlabel("Longitud de las palabras", fontsize = 14)
 plt.ylabel("Cantidad de las palabras", fontsize = 14)
+plt.legend(fontsize = 13)
     
 plt.show()
