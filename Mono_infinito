@@ -1,0 +1,57 @@
+import random
+import string 
+import time
+
+########################################################
+############## Ejecución de la simulación ##############
+########################################################
+
+# Cargar abecedario de 26 letras minúsculas
+abecedario = [letra for letra in string.ascii_lowercase]
+
+cadena_a_buscar = 'sofia'
+
+cantidad_ejecuciones = 1500
+
+repeticiones = []
+
+for repeticion in range(cantidad_ejecuciones): 
+    cadena = ''.join([random.choice(abecedario) for x in range(len(cadena_a_buscar))])
+    
+    tiempo_comienzo = time.time()
+
+    while cadena_a_buscar != cadena[-len(cadena_a_buscar):]:
+        cadena += random.choice(abecedario)
+
+    tiempo_final = time.time()
+    
+    tiempo_total = tiempo_final - tiempo_comienzo
+    
+    repeticiones.append((len(cadena), tiempo_total))
+
+#########################################################
+######## Graficación del promedio de caracteres #########
+#########################################################
+
+import numpy as np
+import matplotlib.style as style
+import matplotlib.pyplot as plt
+
+# Escalar las unidades de la cantidad de caracteres
+caracteres_sin_unidades = [repeticiones[x][0] for x in range(len(repeticiones))]
+caracteres_finales = list(np.array(caracteres_sin_unidades)/10**6)
+
+def promedio(lista):
+    return [sum(lista[1:i])/i for i in range(1,len(lista)+1)]
+
+plt.style.use(['seaborn'])
+plt.figure(figsize = (14,7))
+
+plt.plot(range(len(caracteres_finales)), [(26**5)/10**6]*len(caracteres_finales), color = 'red', alpha = 0.7, label = 'Media teórica')
+plt.plot(range(len(caracteres_finales)), promedio(caracteres_finales), label = "Media observada")
+plt.title("Promedio de caracteres necesarios para encontrar la palabra 'sofia'", fontsize = 16)
+plt.xlabel("Cantidad de realizaciones", fontsize = 14)
+plt.ylabel("Promedio de cantidad de caracteres (en millones)", fontsize = 14)
+plt.legend(loc = 7, fontsize = 13, shadow = True)
+
+plt.show()
