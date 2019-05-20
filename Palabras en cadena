@@ -47,12 +47,6 @@ conteo_apariciones = dict(zip(llave_apariciones, valores_apariciones))
 
 valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palabras[:len(valores_apariciones)]))
 
-etiquetas = ["{0:.1%}".format(numero) for numero in valores_porcentuales]
-
-valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palabras[:len(valores_apariciones)]))
-
-etiquetas = ["{0:.1%}".format(numero) for numero in valores_porcentuales]
-
 plt.style.use(['seaborn'])
 plt.figure(figsize = (14,7))
 
