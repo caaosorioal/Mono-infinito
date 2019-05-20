@@ -1,0 +1,65 @@
+import unicodedata
+import numpy as np
+import matplotlib.style as style
+import matplotlib.pyplot as plt
+
+def eliminar_acentos(cadena):
+    return unicodedata.normalize("NFKD", cadena).encode("ascii","ignore").decode("ascii")
+
+letras_lectura = [letra for letra in string.ascii_lowercase]
+
+palabras = []
+
+for cadena in letras_lectura:
+    ruta = "C:\\Datos\\dics\\"+ cadena + ".txt"
+    
+    cadena_txt = open(ruta,"r", encoding = 'utf-8').read().split('\n')
+    
+    palabras_formateo = [eliminar_acentos(palabra.split(', ')[0]) for palabra in cadena_txt]
+    
+    palabras.append(palabras_formateo)
+
+palabras_finales = sum(palabras, [])
+
+
+# Creación de la cadena de tamaño 50M
+abecedario = [letra for letra in string.ascii_lowercase]
+longitud_cadena = 50000000
+
+for x in range(longitud_cadena):
+    cadena +=random.choice(abecedario)
+    
+# Búsqueda de palabras que están en la cadena 
+palabras_aparecen = [palabra for palabra in palabras_finales if palabra in cadena]
+
+
+# Contar la cantidad de caracteres en cada palabra
+palabras_longitud = [len(palabra) for palabra in palabras_finales]
+palabras_aparecen_longitud = [len(palabra) for palabra in palabras_aparecen]
+
+llave_palabras = list(set(palabras_longitud))[2:]
+valores_palabras = [palabras_longitud.count(x) for x in set(llave_palabras)]
+conteo_palabras = dict(zip(llave_palabras, valores_palabras))
+
+llave_apariciones = list(set(palabras_aparecen_longitud))[2:]
+valores_apariciones = [palabras_aparecen_longitud.count(x) for x in set(llave_apariciones)]
+conteo_apariciones = dict(zip(llave_apariciones, valores_apariciones))
+
+valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palabras[:len(valores_apariciones)]))
+
+etiquetas = ["{0:.1%}".format(numero) for numero in valores_porcentuales]
+
+plt.style.use(['seaborn'])
+plt.figure(figsize = (14,7))
+
+plt.bar(conteo_apariciones.keys(), [conteo_palabras[llave] for llave in conteo_apariciones.keys()])
+plt.bar(conteo_apariciones.keys(), conteo_apariciones.values(), color = 'red')
+
+for x, y in enumerate(valores_palabras[:len(valores_apariciones)]):
+    plt.text(x + 1.9 , y + 150, "{0:.1%}".format(valores_porcentuales[x]), color='black', fontsize = 11)
+
+plt.title("Porcentaje de apariciones en la cadena por longitud", fontsize = 17)
+plt.xlabel("Longitud de las palabras", fontsize = 14)
+plt.ylabel("Cantidad de las palabras", fontsize = 14)
+    
+plt.show()
