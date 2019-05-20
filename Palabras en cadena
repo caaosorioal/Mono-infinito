@@ -6,6 +6,11 @@ import matplotlib.pyplot as plt
 def eliminar_acentos(cadena):
     return unicodedata.normalize("NFKD", cadena).encode("ascii","ignore").decode("ascii")
 
+########################################################
+######## Lectura de los txt con las palabras ###########
+########################################################
+
+
 letras_lectura = [letra for letra in string.ascii_lowercase]
 
 palabras = []
@@ -29,9 +34,12 @@ longitud_cadena = 50000000
 for x in range(longitud_cadena):
     cadena +=random.choice(abecedario)
     
+########################################################
+###### Apariciones de palabras en la cadena ############
+########################################################
+
 # Búsqueda de palabras que están en la cadena 
 palabras_aparecen = [palabra for palabra in palabras_finales if palabra in cadena]
-
 
 # Contar la cantidad de caracteres en cada palabra
 palabras_longitud = [len(palabra) for palabra in palabras_finales]
@@ -46,6 +54,10 @@ valores_apariciones = [palabras_aparecen_longitud.count(x) for x in set(llave_ap
 conteo_apariciones = dict(zip(llave_apariciones, valores_apariciones))
 
 valores_porcentuales = list(np.array(valores_apariciones)/np.array(valores_palabras[:len(valores_apariciones)]))
+
+########################################################
+############### Creación de la gráfica #################
+########################################################
 
 plt.style.use(['seaborn'])
 plt.figure(figsize = (14,7))
